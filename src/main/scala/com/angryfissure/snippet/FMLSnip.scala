@@ -71,10 +71,23 @@ class FMLSnip {
             SetHtml ("cnt_id", Text(cnt.toString))}, text)
 
     private def sucksA (fml:FML, reDraw:() => JsCmd) = 
-        a(()=> { fml.sucks(fml.sucks+1).save; reDraw()}, Text(fml.sucks.toString))
+        a(()=> {
+                if (User.loggedIn_?){
+                    fml.sucks(fml.sucks+1).save; reDraw()
+                } else {
+                    JsRaw("alert('Login first')")
+                }
+                }, Text(fml.sucks.toString))
 
     private def deservesA (fml:FML, reDraw:() => JsCmd) = 
-        a(()=> { fml.deserved(fml.deserved+1).save; reDraw()}, Text(fml.deserved.toString))
+        a(()=> { 
+            if (User.loggedIn_?){
+                fml.deserved(fml.deserved+1).save; reDraw()
+            } else {
+                JsRaw("alert('Login first')")
+            }
+            }
+            , Text(fml.deserved.toString))
 
  // A super Lame version  
  //private def sucksA (fml:FML, reDraw: () => JsCmd) = 
@@ -90,10 +103,6 @@ class FMLSnip {
 		"sucks"->
         sucksA (fml,reDraw),
 		"deserved"-> 
-        // ajaxCall and ajaxInvoke actually returns a pair (String, JsExp).
-        // The String is used for garbage collection, so we only need
-        // to use the JsExp element (_2).
-        // JsObj needs JsExp, so I'm forcing fml.id to String
         deservesA(fml,reDraw),
         "userName" -> <a href={"/user/"+fml.user+"/view"}>{fml.user.obj.open_!.name}</a>
         )

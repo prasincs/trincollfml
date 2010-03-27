@@ -1,6 +1,20 @@
 <lift:surround with="default" at="content">
   <lift:Util.out>
-  Please <lift:menu.item name="Login">login.</lift:menu.item>
+    <lift:FMLSnip.list all_id="all_fmls">
+	 <div id="all_fmls">
+	   <ul style="list-style-type:none;">
+	    <fml:list>
+	      <li>
+	        <fml:fmlStr>FmlStr</fml:fmlStr><br/>
+            <fml:sucks>sucksNum</fml:sucks>people think your life sucks.&nbsp;|&nbsp;
+	        <fml:deserved>deservedNum</fml:deserved> people think you deserve it.&nbsp;|&nbsp;
+	        Submitted by user <fml:userName>userNum</fml:userName>
+	      </li>
+	    </fml:list>
+	   </ul>
+	 </div>
+	</lift:FMLSnip.list>
+
   </lift:Util.out>
   <lift:Util.in>
   	<lift:FMLSnip.add form="post">
@@ -20,20 +34,6 @@
   	</table>
   	</lift:FMLSnip.add>
   	
-  	<lift:FMLSnip.list all_id="all_fmls">
-	 <div id="all_fmls">
-	   <ul style="list-style-type:none;">
-	    <fml:list>
-	      <li>
-	        <fml:fmlStr>FmlStr</fml:fmlStr><br/>
-            <fml:sucks>sucksNum</fml:sucks>people think your life sucks.&nbsp;|&nbsp;
-	        <fml:deserved>deservedNum</fml:deserved> people think you deserve it.&nbsp;|&nbsp;
-	        Submitted by user <fml:userName>userNum</fml:userName>
-	      </li>
-	    </fml:list>
-	   </ul>
-	 </div>
-	</lift:FMLSnip.list>
-  </lift:Util.in>
+  	  </lift:Util.in>
 </lift:surround>
 
