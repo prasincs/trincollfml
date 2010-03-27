@@ -19,6 +19,8 @@ import java.text.SimpleDateFormat
 class FMLSnip {
   object QueryNotDone extends SessionVar(false)
   
+  var cnt = 0
+
   def add(form: NodeSeq): NodeSeq = {
     Console.println(new Date())
 	val fml = FMLMetaData.create.user(User.currentUser).timeSubmitted(new Date())
@@ -47,19 +49,38 @@ class FMLSnip {
          <span>{ajaxText(fml.fmlStr,
                      v => {fml.fmlStr(v).save; reDraw()})}
          </span>)
-object showUser extends RequestVar[Long](null)
 
     def fmlDeservedFunc(str: String) : JsCmd = {
-        println("Received "+ str)
+        //val fmlId = JSONParser.parse(str).open_!
+        //println ("" + fmlId)
+        //var fmlMap = JSONParser.parse(str).toList.map( i => (i.toString, i.toString)d
+        println("Received "+ JSONParser.parse(str))
         JsRaw("alert ('deserved clicked')")
     }
 
 
     def fmlSucksFunc(str: String) : JsCmd = {
         println("Received "+ str)
-        JsRaw("alert ('sucks clicked')")
+        //JsRaw("alert ('sucks clicked')")
+        SetHtml("5-sucks", Text(1.toString))
     }
 
+    def doClicker(text: NodeSeq): NodeSeq = 
+        a(()=> {
+            cnt = cnt +1
+            SetHtml ("cnt_id", Text(cnt.toString))}, text)
+
+    private def sucksA (fml:FML, reDraw:() => JsCmd) = 
+        a(()=> { fml.sucks(fml.sucks+1).save; reDraw()}, Text(fml.sucks.toString))
+
+    private def deservesA (fml:FML, reDraw:() => JsCmd) = 
+        a(()=> { fml.deserved(fml.deserved+1).save; reDraw()}, Text(fml.deserved.toString))
+
+ // A super Lame version  
+ //private def sucksA (fml:FML, reDraw: () => JsCmd) = 
+ //       swappable(<a>{fml.sucks}</a>,
+ //       <a>{fml.sucks+1}
+ //           </a>)
 
   private def doList(reDraw: () => JsCmd)(html: NodeSeq): NodeSeq =
 	 toShow.
@@ -67,13 +88,14 @@ object showUser extends RequestVar[Long](null)
 	  bind("fml", html,
 		"fmlStr"->fmlStr(fml, reDraw),
 		"sucks"->
-        <a  onclick={ajaxCall(Str("fml-deserved"), fmlSucksFunc _ )._2}>{fml.sucks}</a>,
+        sucksA (fml,reDraw),
 		"deserved"-> 
         // ajaxCall and ajaxInvoke actually returns a pair (String, JsExp).
         // The String is used for garbage collection, so we only need
         // to use the JsExp element (_2).
-            <a  onclick={ajaxCall(Str("fml-deserved"), fmlDeservedFunc _ )._2}>{fml.deserved}</a>,
-        "userName" -> link("/user/"+fml.user+"/view",()=> showUser(fml.user.obj.open_!.id), Text(fml.user.obj.open_!.firstName))
+        // JsObj needs JsExp, so I'm forcing fml.id to String
+        deservesA(fml,reDraw),
+        "userName" -> <a href={"/user/"+fml.user+"/view"}>{fml.user.obj.open_!.name}</a>
         )
 	  )
   

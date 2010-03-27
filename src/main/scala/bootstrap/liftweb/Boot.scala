@@ -21,7 +21,7 @@ class Boot {
 
     // where to search snippet
     LiftRules.addToPackages("com.angryfissure")
-    Schemifier.schemify(true, Log.infoF _, User, FMLMetaData)
+    Schemifier.schemify(true, Log.infoF _, Role, User, FMLMetaData)
 
     //val usersLink = new Link(List("user"),false)
     // Build SiteMap
