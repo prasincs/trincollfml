@@ -55,7 +55,7 @@ object showUser extends RequestVar[Long](null)
 		"fmlStr"->fmlStr(fml, reDraw),
 		"sucks"->fml.sucks,
 		"deserved"->fml.deserved,
-        "userName" -> link("/user/"+fml.user,()=> showUser(fml.user.obj.open_!.id), Text(fml.user.obj.open_!.firstName))
+        "userName" -> link("/user/"+fml.user+"/view",()=> showUser(fml.user.obj.open_!.id), Text(fml.user.obj.open_!.firstName))
         )
 	  )
   
