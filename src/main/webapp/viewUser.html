@@ -1,0 +1,24 @@
+<lift:surround with="default" at="content">
+	<lift:ViewUser.view eager_eval="true">
+	<div id = "user-profile">
+		<table>
+			<tr>
+				<td>User Id</td>
+				<td><user:id /></td>
+			</tr>
+			<tr>
+				<td>Username</td>
+				<td><user:name /></td>
+			</tr>
+			<tr>
+				<td>FirstName</td>
+				<td><user:firstName /></td>
+			</tr>
+			<tr>
+				<td>LastName</td>
+				<td><user:lastName /></td>
+			</tr>
+		</table>
+	</div>
+	</lift:ViewUser.view>
+</lift:surround>

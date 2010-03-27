@@ -55,7 +55,8 @@ object showUser extends RequestVar[Long](null)
 		"fmlStr"->fmlStr(fml, reDraw),
 		"sucks"->fml.sucks,
 		"deserved"->fml.deserved,
-        "userName" -> link("/user/"+fml.user,()=> showUser(fml.user.obj.open_!.id), Text(fml.user.obj.open_!.firstName))
+        "userName" -> FuncAttrBindParam("view_href", _ => 
+		Text("user/"+fml.user), "href")
         )
 	  )
   

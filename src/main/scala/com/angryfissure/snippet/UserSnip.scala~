@@ -1,0 +1,39 @@
+package com.angryfissure.snippet
+
+import com.angryfissure._
+import com.angryfissure.model._
+import net.liftweb._
+import http._
+import SHtml._
+import S._
+import js._
+import JsCmds._
+import mapper._
+import util._
+import Helpers._
+import scala.xml.{NodeSeq, Text}
+import java.util.Date;
+import java.text.SimpleDateFormat
+
+class UserSnip {
+  def list(html: NodeSeq) : NodeSeq = {
+	//var id = S.param("id") openOr ""
+	var id = 1
+	var user = try {
+		User.findByKey(id).open_!
+	}catch {
+		case e:NumberFormatException => Empty
+	}
+	
+	
+	bind ("user", html,
+	      "id" -> user,
+	      "name" -> user.name,
+	      "firstName" -> user.firstName,
+	      "lastName" -> user.lastName
+		)
+}
+   
+  
+
+}

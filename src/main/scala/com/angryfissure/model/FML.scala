@@ -5,10 +5,14 @@ import mapper._
 import http._
 import SHtml._
 import util._
+import model._
+import Helpers._
+import scala.xml._
 
 object FMLMetaData extends FML with KeyedMetaMapper[Long, FML] with CRUDify[Long, FML]{
      override def dbTableName = "fmls"
-     override def fieldOrder = List(fmlStr, user, timeSubmitted, sucks, deserved, approved) }
+     override def fieldOrder = List(fmlStr, user, timeSubmitted, sucks, deserved, approved) 
+     }
 
 class FML extends KeyedMapper[Long, FML] {
 	def getSingleton = FMLMetaData   
@@ -18,7 +22,7 @@ class FML extends KeyedMapper[Long, FML] {
     object fmlStr extends MappedPoliteString(this,255)
     object user extends MappedLongForeignKey(this, User)
     object timeSubmitted extends MappedDateTime(this)
-//    {
+    //    {
 //	    val dateFormat = new SimpleDateFormat("MM/dd/yyyy, hh:mm a")
 //	    override def defaultValue = time(millis + days(5))
 //	    override def asHtml = Text(toString)
