@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-2010-03-27 02:37:34.518 GMT:
- Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance a816c00e-0127-9d7b-4596-000003d58a28
-on database directory /home3/pgautam/cpsc415-2010/trincollfml/lift_example  
+2010-03-27 04:35:04.637 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.4.2.0 - (689064): instance a816c00e-0127-9de6-d96d-00000312bab8
+on database directory /home/pgautam/Dropbox/classes/cpsc415-2010/trincollfml/lift_example  
 
 Database Class Loader started - derby.database.classpath=''

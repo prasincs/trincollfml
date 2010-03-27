@@ -8,6 +8,7 @@ import SHtml._
 import S._
 import js._
 import JsCmds._
+import JE._
 import mapper._
 import util._
 import Helpers._
@@ -48,13 +49,30 @@ class FMLSnip {
          </span>)
 object showUser extends RequestVar[Long](null)
 
+    def fmlDeservedFunc(str: String) : JsCmd = {
+        println("Received "+ str)
+        JsRaw("alert ('deserved clicked')")
+    }
+
+
+    def fmlSucksFunc(str: String) : JsCmd = {
+        println("Received "+ str)
+        JsRaw("alert ('sucks clicked')")
+    }
+
+
   private def doList(reDraw: () => JsCmd)(html: NodeSeq): NodeSeq =
 	 toShow.
 	 flatMap(fml =>
 	  bind("fml", html,
 		"fmlStr"->fmlStr(fml, reDraw),
-		"sucks"->fml.sucks,
-		"deserved"->fml.deserved,
+		"sucks"->
+        <a  onclick={ajaxCall(Str("fml-deserved"), fmlSucksFunc _ )._2}>{fml.sucks}</a>,
+		"deserved"-> 
+        // ajaxCall and ajaxInvoke actually returns a pair (String, JsExp).
+        // The String is used for garbage collection, so we only need
+        // to use the JsExp element (_2).
+            <a  onclick={ajaxCall(Str("fml-deserved"), fmlDeservedFunc _ )._2}>{fml.deserved}</a>,
         "userName" -> link("/user/"+fml.user+"/view",()=> showUser(fml.user.obj.open_!.id), Text(fml.user.obj.open_!.firstName))
         )
 	  )
