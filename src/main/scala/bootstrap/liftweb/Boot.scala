@@ -21,20 +21,24 @@ class Boot {
 
     // where to search snippet
     LiftRules.addToPackages("com.angryfissure")
-    Schemifier.schemify(true, Log.infoF _, Role, User, FMLMetaData)
+    Schemifier.schemify(true, Log.infoF _, Role, User, FMLMetaData, CommentMetaData)
 
     //val usersLink = new Link(List("user"),false)
     // Build SiteMap
-    val entries = Menu(Loc("Home", List("index"), "Home")):: Menu(Loc("User", List("viewUser"), "User", Hidden))::User.sitemap ++ FMLMetaData.menus
+    val entries = Menu(Loc("Home", List("index"), "Home")):: Menu(Loc("User", List("viewUser"), "User", Hidden)) :: 
+        Menu(Loc("FML", List("viewFml"), "FML", Hidden)) ::User.sitemap ++ FMLMetaData.menus
    
 
    LiftRules.setSiteMap(SiteMap(entries:_*))
     LiftRules.rewrite.append {
-	case RewriteRequest(
-		ParsePath ("user" :: id :: "view" :: Nil , _, _, _), _ , _) =>
-        println(id)
-		RewriteResponse ("viewUser"::Nil, Map("id" -> id))
-	
+	    case RewriteRequest(
+		    ParsePath ("user" :: id :: "view" :: Nil , _, _, _), _ , _) =>
+		    RewriteResponse ("viewUser"::Nil, Map("id" -> id))
+	    
+        case RewriteRequest(
+            ParsePath ("fmls" :: "view" :: id :: Nil, _, _, _), _, _) =>
+            RewriteResponse ("viewFml"::Nil, Map("id" -> id))
+
     }
     /*
      * Show the spinny image when an Ajax call starts

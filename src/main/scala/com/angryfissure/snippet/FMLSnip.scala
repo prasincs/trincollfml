@@ -19,7 +19,6 @@ import java.text.SimpleDateFormat
 class FMLSnip {
   object QueryNotDone extends SessionVar(false)
   
-  var cnt = 0
 
   def add(form: NodeSeq): NodeSeq = {
     Console.println(new Date())
@@ -43,12 +42,9 @@ class FMLSnip {
   
   private def toShow =
 	  FMLMetaData.findAll(OrderBy(FMLMetaData.timeSubmitted, Descending))
-  
-  private def fmlStr(fml: FML, reDraw: () => JsCmd) =
-	  swappable(<span style="font-size:20px;">{fml.fmlStr}</span>,
-         <span>{ajaxText(fml.fmlStr,
-                     v => {fml.fmlStr(v).save; reDraw()})}
-         </span>)
+ 
+ private def fmlStr(fml:FML) = 
+    <span class="fml-string">{fml.fmlStr}</span>
 
     def fmlDeservedFunc(str: String) : JsCmd = {
         //val fmlId = JSONParser.parse(str).open_!
@@ -59,17 +55,10 @@ class FMLSnip {
     }
 
 
-    def fmlSucksFunc(str: String) : JsCmd = {
-        println("Received "+ str)
-        //JsRaw("alert ('sucks clicked')")
-        SetHtml("5-sucks", Text(1.toString))
-    }
+    def fmlId(fml:FML) = 
+         <a class="fml-link" href={"/fmls/view/"+fml.id}>#{fml.id}</a>
 
-    def doClicker(text: NodeSeq): NodeSeq = 
-        a(()=> {
-            cnt = cnt +1
-            SetHtml ("cnt_id", Text(cnt.toString))}, text)
-
+   
     private def sucksA (fml:FML, reDraw:() => JsCmd) = 
         a(()=> {
                 if (User.loggedIn_?){
@@ -89,27 +78,27 @@ class FMLSnip {
             }
             , Text(fml.deserved.toString))
 
- // A super Lame version  
- //private def sucksA (fml:FML, reDraw: () => JsCmd) = 
- //       swappable(<a>{fml.sucks}</a>,
- //       <a>{fml.sucks+1}
- //           </a>)
+    private def bindFML(fml:FML, html: NodeSeq, reDraw: () => JsCmd) =
+        bind("fml", html,
+            "id" -> fmlId(fml),
+		    "fmlStr"->fmlStr(fml),
+    		"sucks"->
+                sucksA (fml,reDraw),
+		    "deserved"-> 
+                deservesA(fml,reDraw),
+            "userName" -> <a href={"/user/"+fml.user+"/view"}>{fml.user.obj.open_!.name}</a>
+        )
+
 
   private def doList(reDraw: () => JsCmd)(html: NodeSeq): NodeSeq =
 	 toShow.
 	 flatMap(fml =>
-	  bind("fml", html,
-		"fmlStr"->fmlStr(fml, reDraw),
-		"sucks"->
-        sucksA (fml,reDraw),
-		"deserved"-> 
-        deservesA(fml,reDraw),
-        "userName" -> <a href={"/user/"+fml.user+"/view"}>{fml.user.obj.open_!.name}</a>
-        )
-	  )
+        bindFML(fml,html, reDraw)    
+	)
   
   def list(html: NodeSeq) = {
 	  val id = S.attr("all_id").open_!
+      println(id)
 	  def inner(): NodeSeq = {
 	    def reDraw() = SetHtml(id, inner())
 	    bind("fml", html,
@@ -117,4 +106,16 @@ class FMLSnip {
 	  }
 	  inner()
   }
+
+ def view(html: NodeSeq) = {
+    var id = S.param("id") openOr ""
+    var fml = try {
+			FMLMetaData.findByKey(id.toLong)
+		} catch {
+			case e:NumberFormatException => Empty
+		}
+        var l = fml.open_!
+        def reDraw() = SetHtml(id, Text("test"))
+    bindFML(l, html,reDraw)
+ }
 }

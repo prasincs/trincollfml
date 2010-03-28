@@ -12,6 +12,8 @@ import scala.xml._
 object FMLMetaData extends FML with KeyedMetaMapper[Long, FML] with CRUDify[Long, FML]{
      override def dbTableName = "fmls"
      override def fieldOrder = List(fmlStr, user, timeSubmitted, sucks, deserved, approved) 
+     override def viewMenuLoc = Empty
+
      }
 
 class FML extends KeyedMapper[Long, FML] {
