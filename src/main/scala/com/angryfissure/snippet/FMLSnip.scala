@@ -15,6 +15,7 @@ import Helpers._
 import scala.xml.{NodeSeq, Text}
 import java.util.Date;
 import java.text.SimpleDateFormat
+import javax.servlet.http.{Cookie}
 
 class FMLSnip {
   object QueryNotDone extends SessionVar(false)
@@ -62,7 +63,16 @@ class FMLSnip {
     private def sucksA (fml:FML, reDraw:() => JsCmd) = 
         a(()=> {
                 if (User.loggedIn_?){
-                    fml.sucks(fml.sucks+1).save; reDraw()
+                    println(findCookie("trincollfml_fml_"+fml.id));
+                    if (findCookie("trincollfml_fml_"+fml.id).isEmpty){
+                        var cookie = new Cookie("trincollfml_fml_"+fml.id, "true")
+                        cookie.setMaxAge(300);
+                        addCookie(cookie);
+                        fml.sucks(fml.sucks+1).save; 
+                        reDraw()
+                    }else {
+                      JsRaw("alert('you can\'t comment twice')");
+                    }
                 } else {
                     JsRaw("alert('Login first')")
                 }

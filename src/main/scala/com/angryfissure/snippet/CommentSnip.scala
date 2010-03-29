@@ -44,10 +44,34 @@ class CommentSnip {
         //CommentMetaData.findAll(OrderBy(CommentMetaData.timeSubmitted, Descending))
         CommentMetaData.findAll(By(CommentMetaData.fml, fmlId))
 
+
+    private def upA (comment: Comment, reDraw :() => JsCmd) = 
+        a(()=> {
+                if (User.loggedIn_?){
+                    comment.up(comment.up+1).save; reDraw()
+                } else {
+                    JsRaw("alert('Login first')")
+                }
+                }, Text(comment.up.toString))
+
+ 
+    private def downA (comment: Comment, reDraw :() => JsCmd) = 
+        a(()=> {
+                if (User.loggedIn_?){
+                    comment.down(comment.down+1).save; reDraw()
+                } else {
+                    JsRaw("alert('Login first')")
+                }
+                }, Text(comment.down.toString))
+
+
     private def bindComment(comment:Comment, html: NodeSeq, reDraw: () => JsCmd) = 
         bind("comment", html,
             "commentStr" -> Text(comment.commentStr),
+            "up" -> upA(comment, reDraw),
+            "down" -> downA(comment, reDraw),
             "userName" -> <a href={"/user/"+comment.user+"/view"}>{comment.user.obj.open_!.name}</a>
+
         )
 
     private def doList( reDraw: () => JsCmd, fmlId : Long) ( html: NodeSeq): NodeSeq = {
