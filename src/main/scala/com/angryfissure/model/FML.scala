@@ -8,6 +8,7 @@ import util._
 import model._
 import Helpers._
 import scala.xml._
+import common._ //For Full and Empty to work
 
 object FMLMetaData extends FML with KeyedMetaMapper[Long, FML] with CRUDify[Long, FML]{
      override def dbTableName = "fmls"

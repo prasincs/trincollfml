@@ -14,7 +14,7 @@ import Helpers._
 import scala.xml.{NodeSeq, Text}
 import java.util.Date;
 import java.text.SimpleDateFormat
-
+import common._
 
 class ViewUser {
 		

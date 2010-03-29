@@ -13,7 +13,7 @@ object CommentMetaData extends  Comment with KeyedMetaMapper[Long, Comment] with
     override def dbTableName = "comments"
 }
 
-class Comment extends KeyedMapper[Long, Comment] with IdPK {
+class Comment extends LongKeyedMapper[Comment] with IdPK {
     def getSingleton = CommentMetaData
     object user extends MappedLongForeignKey(this, User)
     object fml extends MappedLongForeignKey(this, FMLMetaData)

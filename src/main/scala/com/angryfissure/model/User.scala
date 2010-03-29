@@ -5,6 +5,7 @@ import _root_.net.liftweb.util._
 import net.liftweb._
 import mapper._
 import Helpers._
+import common._ // for Full and Empty to work
 
 /**
  * The singleton that has methods for accessing the database

@@ -11,7 +11,7 @@ import scala.xml._
 
 
 
-class Role extends KeyedMapper[Long, Role] with IdPK {
+class Role extends LongKeyedMapper[Role] with IdPK {
     def getSingleton = Role
 
     object name extends MappedString(this, 255)

@@ -15,11 +15,13 @@ import Helpers._
 import scala.xml.{NodeSeq, Text}
 import java.util.Date;
 import java.text.SimpleDateFormat
-import javax.servlet.http.{Cookie}
+import net.liftweb.http.provider.HTTPCookie
+import common._
 
 class FMLSnip {
   object QueryNotDone extends SessionVar(false)
-  
+  def cookieName(fml:FML) = 
+    "trincollfml_fml_"+fml.id+"user_"+User.currentUser.open_!.id
 
   def add(form: NodeSeq): NodeSeq = {
     Console.println(new Date())
@@ -63,15 +65,15 @@ class FMLSnip {
     private def sucksA (fml:FML, reDraw:() => JsCmd) = 
         a(()=> {
                 if (User.loggedIn_?){
-                    println(findCookie("trincollfml_fml_"+fml.id));
-                    if (findCookie("trincollfml_fml_"+fml.id).isEmpty){
-                        var cookie = new Cookie("trincollfml_fml_"+fml.id, "true")
-                        cookie.setMaxAge(300);
-                        addCookie(cookie);
+                    println(findCookie(cookieName(fml)));
+                    if (findCookie(cookieName(fml)).isEmpty){
+                        //var cookie = HTTPCookie("trincollfml_fml_"+fml.id, "true")
+                        //cookie.setMaxAge(300);
+                        addCookie(HTTPCookie(cookieName(fml),"true").setMaxAge(86400).setPath("/ajax_request"));
                         fml.sucks(fml.sucks+1).save; 
                         reDraw()
                     }else {
-                      JsRaw("alert('you can\'t comment twice')");
+                      JsRaw("alert('you cannot rate twice')");
                     }
                 } else {
                     JsRaw("alert('Login first')")
@@ -81,7 +83,16 @@ class FMLSnip {
     private def deservesA (fml:FML, reDraw:() => JsCmd) = 
         a(()=> { 
             if (User.loggedIn_?){
-                fml.deserved(fml.deserved+1).save; reDraw()
+                println(findCookie(cookieName(fml)));
+                    if (findCookie(cookieName(fml)).isEmpty){
+                        //var cookie = HTTPCookie("trincollfml_fml_"+fml.id, "true")
+                        //cookie.setMaxAge(300);
+                        addCookie(HTTPCookie(cookieName(fml),"true").setMaxAge(86400).setPath("/ajax_request"));
+                        fml.deserved(fml.deserved+1).save; 
+                        reDraw()
+                    }else {
+                      JsRaw("alert('you cannot rate twice')");
+                    }
             } else {
                 JsRaw("alert('Login first')")
             }
