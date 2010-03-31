@@ -1,12 +1,24 @@
 <lift:surround with="default" at="content">
-	<lift:ViewUser.view>
-	<div id = "user-profile">
-		<ul>
-			<li><user:id /></li>
-			<li><user:name /></li>
-			<li><user:firstName /></li>
-			<li><user:lastName /></li>
-		</ul>
+	<lift:ViewUser.view eager_eval="true">
+	<div class="fml>
+		<table>
+			<tr>
+				<td>User Id</td>
+				<td><user:id /></td>
+			</tr>
+			<tr>
+				<td>Username</td>
+				<td><user:name /></td>
+			</tr>
+			<tr>
+				<td>FirstName</td>
+				<td><user:firstName /></td>
+			</tr>
+			<tr>
+				<td>LastName</td>
+				<td><user:lastName /></td>
+			</tr>
+		</table>
 	</div>
-	</lift:UserSnip.list>
+	</lift:ViewUser.view>
 </lift:surround>

@@ -1,7 +1,7 @@
 <lift:surround with="default" at="content">
 
     <lift:FMLSnip.view eager_eval="true"> 
-       <ul style="list-style-type:none;">
+       <ul class="fml" style="list-style-type:none;">
         <li>
 	        <fml:fmlStr>FmlStr</fml:fmlStr><br/>
             <fml:id>fmlId</fml:id>
@@ -9,31 +9,34 @@
 	        <fml:deserved>deservedNum</fml:deserved> people think you deserve it.&nbsp;|&nbsp;
             Submitted by user <fml:userName>userNum</fml:userName>
 	    </li>
+	    <li>
+	    <lift:Util.in>
+			<lift:CommentSnip.add form="post" >
+			<table>
+		  	<tr>
+		  	<td>Your Comment:</td>
+		  	<td>
+				<comment:commentStr>Comment</comment:commentStr>
+		  	</td>
+		  	</tr>
+		  	<tr>
+		  	<td>&nbsp;</td>
+		  	<td>
+		  		<comment:submit>Comment Submit</comment:submit>	
+		  	</td>
+		  	</tr>
+			</table>
+			</lift:CommentSnip.add>
+    	</lift:Util.in>
+    	</li>
 	   </ul>
        </lift:FMLSnip.view>
-    <lift:Util.in>
-    <lift:CommentSnip.add form="post" >
-    <table>
-  	<tr>
-  	<td>Your Comment:</td>
-  	<td>
-        <comment:commentStr>Comment</comment:commentStr>
-  	</td>
-  	</tr>
-  	<tr>
-  	<td>&nbsp;</td>
-  	<td>
-  		<comment:submit>Comment Submit</comment:submit>	
-  	</td>
-  	</tr>
-</table>
-    </lift:CommentSnip.add>
-    </lift:Util.in>
+    
     <lift:CommentSnip.list>
-        <div id="comments">
+        <div>
             <ul style="list-style-type:none;">
                 <comment:list>
-                <li>
+                <li class="comment">
                 <comment:commentStr>CommentStr</comment:commentStr><br/>
                 Submitted by <comment:userName>userName</comment:userName>
 		<comment:up /> &nbsp; | &nbsp;

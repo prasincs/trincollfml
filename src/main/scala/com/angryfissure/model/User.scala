@@ -15,12 +15,27 @@ object User extends User with MetaMegaProtoUser[User] {
   override def screenWrap = Full(<lift:surround with="default" at="content">
 			       <lift:bind /></lift:surround>)
   // define the order fields will appear in forms and output
-  override def fieldOrder = List(id, name, firstName, lastName, email,
-  locale, timezone, password, textArea)
+  override def fieldOrder = List(id, name, firstName, lastName, email, password)
 
-  override def signupFields = List(name, firstName, lastName, email, locale, timezone, password, textArea)
+  override def signupFields = List(name, firstName, lastName, email, locale, timezone, password)
   // comment this line out to require email validations
   override def skipEmailValidation = true
+  
+  override def loginXhtml = 
+    <div id="formBox">
+      { super.loginXhtml }
+    </div>
+        
+  override def signupXhtml(user: User) = 
+	<div id="formBox">
+      { super.signupXhtml(user) }
+    </div>
+  
+  override def editXhtml(user: User) = 
+	<div id="formBox">
+      { super.editXhtml(user) }
+    </div>
+  
 }
 
 /**
@@ -28,13 +43,9 @@ object User extends User with MetaMegaProtoUser[User] {
  */
 class User extends MegaProtoUser[User] {
   def getSingleton = User // what's the "meta" server
-  object name extends MappedString(this, 255)
-  object role extends MappedLongForeignKey(this, Role)
-  // define an additional field for a personal essay
-  object textArea extends MappedTextarea(this, 2048) {
-    override def textareaRows  = 10
-    override def textareaCols = 50
-    override def displayName = "Personal Essay"
+  object name extends MappedString(this, 255) {
+  	override def displayName = "Username"
   }
+  object role extends MappedLongForeignKey(this, Role) 
 
 }

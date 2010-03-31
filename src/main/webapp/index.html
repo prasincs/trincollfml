@@ -1,30 +1,30 @@
 <lift:surround with="default" at="content">
-<head>
-    <link rel="stylesheet" type="text/css" href="/css/fml.css" />
-</head>    
+    
    <lift:Util.in>
   	<lift:FMLSnip.add form="post">
-  	<table>
-  	<tr>
-  	<td>Your FML:</td>
-  	<td>
+  	<span id="showSubmit">Submit your FML!</span>
+  	<script type="text/javascript">
+  		$("#showSubmit").toggle(function() {
+			$(this).text("Hide submission");
+			$("#submitBlock").show();
+		},function() {
+			$(this).text("Submit your FML!");
+			$("#submitBlock").hide();
+		});
+  	</script>
+  	<div id="submitBlock" class="fml" style="display:none">
+  	Submit your FML:
   		<fml:fmlStr>FML String</fml:fmlStr>
-  	</td>
-  	</tr>
-  	<tr>
-  	<td>&nbsp;</td>
-  	<td>
+
   		<fml:submit>FML String</fml:submit>	
-  	</td>
-  	</tr>
-  	</table>
+	</div>
     </lift:FMLSnip.add>
     </lift:Util.in>
      <lift:FMLSnip.list all_id="all_fmls">
 	 <div id="all_fmls">
 	   <ul style="list-style-type:none;">
 	    <fml:list>
-	      <li>
+	      <li class="fml">
           <fml:fmlStr>FmlStr</fml:fmlStr><br/>
           <fml:id>FmlId</fml:id>
             <fml:sucks>sucksNum</fml:sucks>people think your life sucks.&nbsp;|&nbsp;

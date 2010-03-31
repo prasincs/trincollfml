@@ -1,6 +1,7 @@
 package com.angryfissure.model
 
 import net.liftweb._
+import net.liftweb.mapper._
 import mapper._
 import http._
 import SHtml._
@@ -22,7 +23,10 @@ class FML extends KeyedMapper[Long, FML] {
     def primaryKeyField = id
     
     object id extends MappedLongIndex(this)
-    object fmlStr extends MappedPoliteString(this,255)
+    object fmlStr extends MappedTextarea(this,2048) {
+      override def textareaRows  = 10
+      override def textareaCols = 50
+  	}
     object user extends MappedLongForeignKey(this, User)
     object timeSubmitted extends MappedDateTime(this)
     //    {
