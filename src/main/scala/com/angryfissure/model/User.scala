@@ -46,6 +46,13 @@ class User extends MegaProtoUser[User] {
   object name extends MappedString(this, 255) {
   	override def displayName = "Username"
   }
-  object role extends MappedLongForeignKey(this, Role) 
+  object role extends MappedEnum(this, Role){
+    override def defaultValue = Role.User
+  }
 
+}
+
+object Role extends Enumeration {
+    val User = Value(0, "User")
+    val Admin = Value(1, "Admin")
 }

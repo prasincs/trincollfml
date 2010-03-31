@@ -139,4 +139,44 @@ class FMLSnip {
         def reDraw() = SetHtml(id, Text("test"))
     bindFML(l, html,reDraw)
  }
+
+
+    private def approvedCheckBox (fml:FML) = 
+        ajaxCheckbox (fml.approved, (approved: Boolean)=> { fml.approved(approved).save; }, ("test","test") )
+                    
+
+    private def bindFMLAll(fml:FML, html: NodeSeq, reDraw: () => JsCmd) =
+            bind("fml", html,
+                     "fmlStr" -> fml.fmlStr,
+                     "user" -> fml.user,
+                     "timesubmitted" -> fml.timeSubmitted,
+                     "sucks" -> fml.sucks,
+                     "deserved" -> fml.deserved,
+                     "approved" -> approvedCheckBox(fml),
+                     FuncAttrBindParam("view_href", _ =>
+                       Text("view/"+ (fml.id)),"href"),
+                     FuncAttrBindParam("edit_href", _ =>
+                   Text("edit/"+ (fml.id)),"href"),
+                    FuncAttrBindParam("delete_href", _ =>
+                        Text("delete/"+ (fml.id)),"href"))
+
+
+  private def doListAll(reDraw: () => JsCmd)(html: NodeSeq): NodeSeq =
+	 toShow.
+	 flatMap(fml =>
+        bindFMLAll(fml,html, reDraw)    
+	)
+  
+  def listAll(html: NodeSeq) = {
+    if (User.loggedIn_?){
+	  def inner(): NodeSeq = {
+	    def reDraw() = SetHtml("all_fmls", inner())
+	    bind("fml", html,
+	        "list" -> doListAll(reDraw) _)
+	  }
+	  inner()
+    }else {
+        redirectTo("/")
+    }
+  }
 }

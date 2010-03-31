@@ -15,6 +15,8 @@ object FMLMetaData extends FML with KeyedMetaMapper[Long, FML] with CRUDify[Long
      override def dbTableName = "fmls"
      override def fieldOrder = List(fmlStr, user, timeSubmitted, sucks, deserved, approved) 
      override def viewMenuLoc = Empty
+     override def createMenuLoc = Empty
+     override def showAllMenuLoc = Empty
 
      }
 
@@ -38,5 +40,6 @@ class FML extends KeyedMapper[Long, FML] {
     object sucks extends MappedInt(this)
     object deserved extends MappedInt(this)
     object approved extends MappedBoolean(this)
+
 
 }

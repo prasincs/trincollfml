@@ -30,8 +30,8 @@ Props.get("db.user"), Props.get("db.password")))
 
     // Build SiteMap
     val entries = Menu(Loc("Home", List("index"), "Home")) ::
-    Menu(Loc("Static", Link(List("static"), true, "/static/index"), "Static Content")) ::
-Menu(Loc("User", List("viewUser"), "User", Hidden)) :: Menu(Loc("FML", List("viewFml"), "FML", Hidden)) ::User.sitemap ++ FMLMetaData.menus
+Menu(Loc("User", List("viewUser"), "User", Hidden)) :: Menu(Loc("FML", List("viewFml"), "FML", Hidden)) ::  Menu(Loc("listFML", List("listFml"), "FML", Hidden)) ::
+User.sitemap ++ FMLMetaData.menus
 
 
     LiftRules.setSiteMap(SiteMap(entries:_*))
@@ -45,6 +45,10 @@ Menu(Loc("User", List("viewUser"), "User", Hidden)) :: Menu(Loc("FML", List("vie
         case RewriteRequest(
             ParsePath ("fmls" :: "view" :: id :: Nil, _, _, _), _, _) =>
             RewriteResponse ("viewFml"::Nil, Map("id" -> id))
+        
+         case RewriteRequest(
+            ParsePath ("fmls" :: "list" :: Nil, _, _, _), _, _) =>
+            RewriteResponse ("listFml"::Nil)
 
     }
 
