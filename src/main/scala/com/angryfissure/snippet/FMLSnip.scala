@@ -142,7 +142,7 @@ class FMLSnip {
 
 
     private def approvedCheckBox (fml:FML) = 
-        ajaxCheckbox (fml.approved, (approved: Boolean)=> { fml.approved(approved).save; }, ("test","test") )
+        ajaxCheckbox (fml.approved, (approved: Boolean)=> { fml.approved(approved).save; JsRaw("alert('fml updated')");}, ("test","test") )
                     
 
     private def bindFMLAll(fml:FML, html: NodeSeq, reDraw: () => JsCmd) =
