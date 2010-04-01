@@ -17,7 +17,7 @@ object User extends User with MetaMegaProtoUser[User] {
   // define the order fields will appear in forms and output
   override def fieldOrder = List(id, name, firstName, lastName, email, password)
 
-  override def signupFields = List(name, firstName, lastName, email, locale, timezone, password)
+  override def signupFields = List(name, email, password)
   // comment this line out to require email validations
   override def skipEmailValidation = true
   
@@ -34,6 +34,16 @@ object User extends User with MetaMegaProtoUser[User] {
   override def editXhtml(user: User) = 
 	<div id="formBox">
       { super.editXhtml(user) }
+    </div>
+    
+  override def lostPasswordXhtml = 
+  	<div id="formBox">
+      { super.lostPasswordXhtml }
+    </div>
+    
+  override def changePasswordXhtml = 
+  	<div id="formBox">
+      { super.changePasswordXhtml }
     </div>
   
 }
