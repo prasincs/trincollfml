@@ -6,7 +6,7 @@ import net.liftweb._
 import mapper._
 import Helpers._
 import common._ // for Full and Empty to work
-
+import java.util.Date
 /**
  * The singleton that has methods for accessing the database
  */
@@ -46,6 +46,10 @@ object User extends User with MetaMegaProtoUser[User] {
       { super.changePasswordXhtml }
     </div>
   
+
+ 
+
+
 }
 
 /**

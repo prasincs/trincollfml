@@ -1,0 +1,26 @@
+<lift:surround with="admin_template" at="content">
+
+<lift:AdminSnip.showUsers >
+    <table class="show_all" style="background-color:white" id="all_users">
+
+      <thead>
+        <tr>
+          <th>id</th><th>username</th><th>role</th>
+        </tr>
+      </thead>
+      <tbody>
+       <user:list> 
+          <tr>
+            <td><user:id/></td>
+	    <td><user:name/></td>
+	    <td><user:role/></td>
+            <td><a user:view_href="">View</a></td>
+            <td><a user:edit_href="">Edit</a></td>
+            <td><a user:delete_href="">Delete</a></td>
+          </tr>
+        </user:list>
+    </tbody>
+    </table>
+
+  </lift:AdminSnip.showUsers>
+</lift:surround>

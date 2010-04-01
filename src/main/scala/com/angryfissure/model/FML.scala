@@ -36,7 +36,8 @@ class FML extends KeyedMapper[Long, FML] {
 //	    override def defaultValue = time(millis + days(5))
 //	    override def asHtml = Text(toString)
 //	    override def toString = dateFormat.format(is)
-//	} 
+//	}
+    object tracking extends MappedLongForeignKey(this, Tracking)
     object sucks extends MappedInt(this)
     object deserved extends MappedInt(this)
     object approved extends MappedBoolean(this)

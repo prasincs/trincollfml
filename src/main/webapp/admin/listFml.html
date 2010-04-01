@@ -1,0 +1,33 @@
+<lift:surround with="admin_template" at="content">
+
+<lift:AdminSnip.showFmls >
+    <table class="show_all" style="background-color:white" id="all_fmls">
+
+      <thead>
+        <tr>
+          <th>fmlstr</th><th>user</th><th>timesubmitted</th><th>sucks</th><th>deserved</th><th>approved</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+       <fml:list> 
+          <tr>
+            <td><fml:fmlStr/></td>
+            <td><fml:user /></td>
+            <td><fml:timesubmitted/></td>
+            <td><fml:sucks/></td>
+            <td><fml:deserved/></td>
+            <td><fml:approved/></td>
+            <td><a fml:view_href="">View</a></td>
+
+            <td><a fml:edit_href="">Edit</a></td>
+            <td><a fml:delete_href="">Delete</a></td>
+          </tr>
+        </fml:list>
+    </tbody>
+    </table>
+
+  </lift:AdminSnip.showFmls>
+</lift:surround>
