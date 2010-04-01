@@ -7,6 +7,8 @@ import mapper._
 import Helpers._
 import common._ // for Full and Empty to work
 import java.util.Date
+import _root_.net.liftweb.sitemap._
+import _root_.net.liftweb.sitemap.Loc._
 /**
  * The singleton that has methods for accessing the database
  */
@@ -47,9 +49,24 @@ object User extends User with MetaMegaProtoUser[User] {
     </div>
   
 
- 
+ def adminMenuLoc: Box[Menu] = 
+      Full(Menu(Loc("Admin", List("admin", "index"),  
+                    "Admin",  
+                    LocGroup("admin"),  
+                    testLogginIn),
+                Menu(Loc("listFmls", List("admin", "listFml"),
+                    "list Fmls")),
+                Menu(Loc("listUsers", List("admin", "listUsers"),
+                    "List Users"))
+                ))  
+    
 
 
+ override lazy val sitemap = 
+        List(loginMenuLoc, logoutMenuLoc, createUserMenuLoc,  
+          lostPasswordMenuLoc, resetPasswordMenuLoc,  
+          editUserMenuLoc, changePasswordMenuLoc,  
+          validateUserMenuLoc,adminMenuLoc).flatten(a => a)  
 }
 
 /**
@@ -58,7 +75,7 @@ object User extends User with MetaMegaProtoUser[User] {
 class User extends MegaProtoUser[User] {
   def getSingleton = User // what's the "meta" server
   object name extends MappedString(this, 255) {
-  	override def displayName = "Username"
+  	override def displayName = "username"
   }
   object role extends MappedEnum(this, Role){
     override def defaultValue = Role.User

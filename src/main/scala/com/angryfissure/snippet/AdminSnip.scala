@@ -65,17 +65,23 @@ class AdminSnip {
   }
 
 
-private def bindUser(user:User, html: NodeSeq, reDraw: () => JsCmd) = 
+
+private def bindUser(user:User, html: NodeSeq, reDraw: () => JsCmd) ={
+  var setRole = User.role
   bind ("user", html,
 	"id"-> user.id,
 	"name" -> user.name,
-	"role" -> user.role,
+    "role" -> ajaxSelectObj(Role.elements.toList.map(v=>(v, v.toString)) , Full(user.role), (selected:ScalaObject) => {
+        println(selected+""); 
+        //user.role(Role.valueOf(selected.toString) getOrElse).save; 
+        Run("alert('test')")}),
 	FuncAttrBindParam("view_href", _ =>
           Text("view/"+ (user.id)),"href"),
         FuncAttrBindParam("edit_href", _ =>
           Text("edit/"+ (user.id)),"href"),
         FuncAttrBindParam("delete_href", _ =>
           Text("delete/"+ (user.id)),"href"))
+      }
 
 private def doListAllUsers(reDraw: ()=> JsCmd)(html:NodeSeq): NodeSeq = 
   getUsers.

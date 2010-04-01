@@ -27,13 +27,10 @@ Props.get("db.user"), Props.get("db.password")))
     // where to search snippet
     LiftRules.addToPackages("com.angryfissure")
     Schemifier.schemify(true, Log.infoF _, User, FMLMetaData, CommentMetaData, Tracking)
-  LiftRules.siteMapFailRedirectLocation = List("index", "Home")
+  LiftRules.siteMapFailRedirectLocation = List("index")
 
     // Build SiteMap
     val entries =  Menu(Loc("Home", List("index"), "Home")) ::
-Menu(Loc("Admin", List("admin","index"), "Admin", LocGroup("admin")))::
-Menu(Loc("User", List("admin","listUsers"), "List Users", LocGroup("admin"))) :: 
- Menu(Loc("listFML", List("admin","listFml"), "listFMLs", LocGroup("admin") )) ::
 User.sitemap  ++ FMLMetaData.menus
 
 
