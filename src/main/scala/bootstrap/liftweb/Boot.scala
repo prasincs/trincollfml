@@ -50,6 +50,12 @@ User.sitemap  ++ FMLMetaData.menus
             ParsePath ("fmls" :: "list" :: Nil, _, _, _), _, _) =>
             RewriteResponse ("listFml"::Nil)
 
+
+        //effectively rewrites /admin to /admin/
+         case RewriteRequest(
+            ParsePath ("admin" :: Nil, _, _, _), _, _) =>
+            RewriteResponse ("admin"::"index" :: Nil)
+
     }
 
     /*

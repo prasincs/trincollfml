@@ -28,6 +28,9 @@ class FML extends KeyedMapper[Long, FML] {
     object fmlStr extends MappedTextarea(this,2048) {
       override def textareaRows  = 10
       override def textareaCols = 50
+      override def toString = {
+        is
+      }
   	}
     object user extends MappedLongForeignKey(this, User)
     object timeSubmitted extends MappedDateTime(this)

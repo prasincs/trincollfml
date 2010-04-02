@@ -6,18 +6,25 @@
   	<script type="text/javascript">
   		$("#showSubmit").toggle(function() {
 			$(this).text("Hide submission");
-			$("#submitBlock").show();
+            $("#submitBlock").show();
+            $('#submitBlock textarea').NobleCount('#count',{
+                    on_negative: 'go_red',
+                    on_positive: 'go_green',
+                    max_chars: 250});
+
 		},function() {
 			$(this).text("Submit your FML!");
 			$("#submitBlock").hide();
-		});
-  	</script>
+            });
+
+         	</script>
   	<div id="submitBlock" class="fml" style="display:none">
   	Submit your FML:
   		<fml:fmlStr>FML String</fml:fmlStr>
 
-  		<fml:submit>FML String</fml:submit>	
-	</div>
+        <fml:submit>FML String</fml:submit>	
+        <span id="count"/> characters remaining.
+    </div>
     </lift:FMLSnip.add>
     </lift:Util.in>
      <lift:FMLSnip.list all_id="all_fmls">
