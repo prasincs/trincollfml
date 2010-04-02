@@ -5,14 +5,15 @@
 
       <thead>
         <tr>
-          <th>id</th><th>username</th><th>role</th>
+			<th>id</th><th>username</th><th>superuser</th><th>role</th><th>View</th><th>Edit</th><th>Delete</th>
         </tr>
       </thead>
       <tbody>
        <user:list> 
           <tr>
             <td><user:id/></td>
-	    <td><user:name/></td>
+			<td><user:name/></td>
+			<td><user:superuser/></td>
 	    <td><user:role/></td>
             <td><a user:view_href="">View</a></td>
             <td><a user:edit_href="">Edit</a></td>

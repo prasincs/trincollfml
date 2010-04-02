@@ -53,11 +53,11 @@ object User extends User with MetaMegaProtoUser[User] {
       Full(Menu(Loc("Admin", List("admin", "index"),  
                     "Admin",  
                     LocGroup("admin"),  
-                    testLogginIn),
+                    testSuperUser),
                 Menu(Loc("listFmls", List("admin", "listFml"),
-                    "list Fmls")),
+                    "Manage Fmls")),
                 Menu(Loc("listUsers", List("admin", "listUsers"),
-                    "List Users"))
+                    "Manage Users"))
                 ))  
     
 

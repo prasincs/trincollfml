@@ -52,7 +52,7 @@ class AdminSnip {
 	)
 
  def showFmls(html:NodeSeq) = {
-   if (User.loggedIn_?){
+   if (User.superUser_?){
 	  def inner(): NodeSeq = {
 	    def reDraw() = SetHtml("all_fmls", inner())
 	    bind("fml", html,
@@ -65,14 +65,20 @@ class AdminSnip {
   }
 
 
+  private def superUserCheckBox(user:User) =
+    ajaxCheckbox (user.superUser, (su: Boolean)=> { user.superUser(su).save; JsRaw("alert('user updated')");}, ("test","test") )
+
+
 
 private def bindUser(user:User, html: NodeSeq, reDraw: () => JsCmd) ={
-  var setRole = User.role
   bind ("user", html,
 	"id"-> user.id,
 	"name" -> user.name,
+    "superuser" -> superUserCheckBox(user),
     "role" -> ajaxSelectObj(Role.elements.toList.map(v=>(v, v.toString)) , Full(user.role), (selected:ScalaObject) => {
         println(selected+""); 
+        println(user.role+"");
+        println (user.role.getClass+"");
         //user.role(Role.valueOf(selected.toString) getOrElse).save; 
         Run("alert('test')")}),
 	FuncAttrBindParam("view_href", _ =>
@@ -89,7 +95,7 @@ private def doListAllUsers(reDraw: ()=> JsCmd)(html:NodeSeq): NodeSeq =
       bindUser(user, html, reDraw))
 
 def showUsers(html:NodeSeq) = {
- if (User.loggedIn_?){
+ if (User.superUser_?){
 	  def inner(): NodeSeq = {
 	    def reDraw() = SetHtml("all_users", inner())
 	    bind("user", html,
