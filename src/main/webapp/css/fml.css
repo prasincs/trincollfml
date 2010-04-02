@@ -95,3 +95,6 @@ li.current a, a:visited, a:link {
 	color: #EDFF91;
 }
 
+#admin-content {
+    background-color:#FFF;
+}

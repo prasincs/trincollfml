@@ -80,7 +80,7 @@ class User extends MegaProtoUser[User] {
   object role extends MappedEnum(this, Role){
     override def defaultValue = Role.User
   }
-
+ 
 }
 
 object Role extends Enumeration {

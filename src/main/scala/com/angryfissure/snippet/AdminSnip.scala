@@ -39,11 +39,11 @@ class AdminSnip {
                      "deserved" -> fml.deserved,
                      "approved" -> approvedCheckBox(fml),
                      FuncAttrBindParam("view_href", _ =>
-                       Text("view/"+ (fml.id)),"href"),
+                       Text("/fmls/view/"+ (fml.id)),"href"),
                      FuncAttrBindParam("edit_href", _ =>
-                   Text("edit/"+ (fml.id)),"href"),
+                   Text("/fmls/edit/"+ (fml.id)),"href"),
                     FuncAttrBindParam("delete_href", _ =>
-                        Text("delete/"+ (fml.id)),"href"))
+                        Text("/fmls/delete/"+ (fml.id)),"href"))
 
   private def doListFmls(reDraw: () => JsCmd)(html: NodeSeq): NodeSeq =
 	 getFmls.
@@ -82,11 +82,11 @@ private def bindUser(user:User, html: NodeSeq, reDraw: () => JsCmd) ={
         //user.role(Role.valueOf(selected.toString) getOrElse).save; 
         Run("alert('test')")}),
 	FuncAttrBindParam("view_href", _ =>
-          Text("view/"+ (user.id)),"href"),
+          Text("/user_mgmt/view/"+ (user.id)),"href"),
         FuncAttrBindParam("edit_href", _ =>
-          Text("edit/"+ (user.id)),"href"),
+          Text("/user_mgmt/edit/"+ (user.id)),"href"),
         FuncAttrBindParam("delete_href", _ =>
-          Text("delete/"+ (user.id)),"href"))
+          Text("/user_mgmt/delete/"+ (user.id)),"href"))
       }
 
 private def doListAllUsers(reDraw: ()=> JsCmd)(html:NodeSeq): NodeSeq = 
