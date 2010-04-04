@@ -28,8 +28,16 @@ class FMLSnip {
 	val fml = FMLMetaData.create.user(User.currentUser).timeSubmitted(new Date())
    
 	def checkAndSave(): Unit =  {
+     var notice = ""
+      if (User.loggedIn_?){
+        notice = "Added "+fml.fmlStr
+        fml.approved(true);
+        }else {
+          notice  = "Placed for moderation"
+        }
+     
       fml.save
-      S.notice("Added "+fml.fmlStr)
+      S.notice(notice);
     }
     
    
@@ -44,7 +52,7 @@ class FMLSnip {
   }
   
   private def toShow =
-	  FMLMetaData.findAll(OrderBy(FMLMetaData.timeSubmitted, Descending))
+	  FMLMetaData.findAll(By(FMLMetaData.approved,true), OrderBy(FMLMetaData.timeSubmitted, Descending))
  
  private def fmlStr(fml:FML) = 
     <span class="fml-string">{fml.fmlStr}</span>
@@ -107,7 +115,12 @@ class FMLSnip {
                 sucksA (fml,reDraw),
 		    "deserved"-> 
                 deservesA(fml,reDraw),
-            "userName" -> <a href={"/user/"+fml.user+"/view"}>{fml.user.obj.open_!.name}</a>
+            "userName" -> {
+                println (fml.user);
+                if (fml.user.obj.isDefined) 
+                <a href={"/user/"+fml.user+"/view"}>{fml.user.obj.open_!.name}</a> 
+                else  
+                  Text("anonymous")}
         )
 
 
