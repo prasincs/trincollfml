@@ -1,0 +1,17 @@
+
+
+Notes on Running ij or h2 console for debugging:
+Using h2 console
+run h2.sh in h2/bin
+and open localhost:8082
+if you are sshed in, run ssh -L 8082:localhost:8082 <host-with-h2-db> and use the browser.
+
+Using ij:
+java -cp ../lab/derby/lib/derby.jar:../lab/derby/lib/derbytools.jar:../h2/bin/h2-1.2.133.jar org.apache.derby/tools.ij
+Run 
+connect 'jdbc:h2:lift_proto.db'
+
+After that, it's usual stuff
+
+
+# thing to note: h2 adds .h2.db to the end of the file anyways. So, you might end up with a bunch of these files
