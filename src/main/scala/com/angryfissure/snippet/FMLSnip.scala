@@ -26,7 +26,8 @@ class FMLSnip {
   def add(form: NodeSeq): NodeSeq = {
     Console.println(new Date())
 	val fml = FMLMetaData.create.user(User.currentUser).timeSubmitted(new Date())
-   
+    println(S.request.open_!)
+	println(S.request.open_!.remoteAddr)
 	def checkAndSave(): Unit =  {
      var notice = ""
       if (User.loggedIn_?){
@@ -73,7 +74,7 @@ class FMLSnip {
     private def sucksA (fml:FML, reDraw:() => JsCmd) = 
         a(()=> {
                 if (User.loggedIn_?){
-                    println(findCookie(cookieName(fml)));
+                    //println(findCookie(cookieName(fml)));
                     if (findCookie(cookieName(fml)).isEmpty){
                         //var cookie = HTTPCookie("trincollfml_fml_"+fml.id, "true")
                         //cookie.setMaxAge(300);
@@ -125,7 +126,7 @@ class FMLSnip {
 
 
   private def doList(reDraw: () => JsCmd)(html: NodeSeq): NodeSeq =
-	 toShow.
+    toShow.
 	 flatMap(fml =>
         bindFML(fml,html, reDraw)    
 	)

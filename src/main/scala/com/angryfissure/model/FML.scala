@@ -40,7 +40,9 @@ class FML extends KeyedMapper[Long, FML] {
 //	    override def asHtml = Text(toString)
 //	    override def toString = dateFormat.format(is)
 //	}
-    object tracking extends MappedLongForeignKey(this, Tracking)
+    object ipAddress extends MappedString(this,50){
+      //override defaultValue= 
+    }
     object sucks extends MappedInt(this)
     object deserved extends MappedInt(this)
     object approved extends MappedBoolean(this)
